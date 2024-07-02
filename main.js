@@ -70,6 +70,16 @@ function performOCR(canvas) {
             logger: (m) => console.log(m)
         }
     ).then(({ data: { text } }) => {
-        document.getElementById('ocr-result').innerText = text;
+        const numbers = text.match(/\d+/g); // Extraer todos los números del texto
+        let elevenDigitNumber = '';
+        if (numbers) {
+            for (let number of numbers) {
+                if (number.length === 11) { // Verificar si el número tiene 11 dígitos
+                    elevenDigitNumber = number;
+                    break; // Detener la búsqueda al encontrar el número de 11 dígitos
+                }
+            }
+        }
+        document.getElementById('ocr-result').innerText = elevenDigitNumber;
     });
 }
