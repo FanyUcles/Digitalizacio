@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Digitalización</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='styles.css'>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+    <script src='https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js'></script>
+    <script src='main.js'></script>
+</head>
+<body>
+
+    <div class="container">
+        <div class="upload-btn-wrapper">
+            <button class="btn">Cargar un archivo</button>
+            <input type="file" name="file" onchange="showPreview(event)"/>
+        </div>
+        <div class="preview" id="preview"></div>
+        <canvas id="pdf-canvas" style="display: none;"></canvas>
+        <div id="ocr-result"></div>
+    </div>
+
+</body>
+</html>
