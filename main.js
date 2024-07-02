@@ -24,7 +24,8 @@ async function renderPDF(pdfData) {
     const pdf = await loadingTask.promise;
     const page = await pdf.getPage(1);
     
-    const viewport = page.getViewport({ scale: 1.5 });
+    const scale = 2;  // Aumentar la escala para mejor calidad
+    const viewport = page.getViewport({ scale: scale });
     const canvas = document.getElementById('pdf-canvas');
     const context = canvas.getContext('2d');
     canvas.height = viewport.height;
@@ -52,8 +53,37 @@ function displayImage(imgData) {
 }
 
 function performOCR(canvas) {
+    const canvasProcessed = document.createElement('canvas');
+    const ctx = canvasProcessed.getContext('2d');
+    canvasProcessed.width = canvas.width;
+    canvasProcessed.height = canvas.height;
+
+    // Dibujar el canvas original en el nuevo canvas
+    ctx.drawImage(canvas, 0, 0);
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const data = imageData.data;
+
+    // Convertir a escala de grises y binarizar, mientras se convierte colores específicos (como rojo) a negro
+    for (let i = 0; i < data.length; i += 4) {
+        const r = data[i];
+        const g = data[i + 1];
+        const b = data[i + 2];
+        const avg = (r + g + b) / 3;
+
+        // Definir un umbral para detectar rojo y otros colores (esto se puede ajustar)
+        if (r > 150 && g < 100 && b < 100) {
+            // Convertir tonos rojos a negro
+            data[i] = data[i + 1] = data[i + 2] = 0;
+        } else {
+            // Binarizar la imagen
+            data[i] = data[i + 1] = data[i + 2] = avg > 128 ? 255 : 0;
+        }
+    }
+
+    ctx.putImageData(imageData, 0, 0);
+
     Tesseract.recognize(
-        canvas,
+        canvasProcessed,
         'eng',
         {
             logger: (m) => console.log(m)
@@ -62,4 +92,3 @@ function performOCR(canvas) {
         document.getElementById('ocr-result').innerText = text;
     });
 }
-

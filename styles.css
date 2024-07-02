@@ -1,6 +1,6 @@
 .container {
     text-align: center;
-    width: 100%; 
+    width: 100%;
     max-width: 800px;
     margin: auto;
 }
@@ -13,13 +13,13 @@
 
 .btn {
     border: 2px solid #b4b4b4;
-    color:black;
-    background-color: #f4f4f4;
+    color: white;
+    background-color: #b4b4b4;
     padding: 8px 20px;
     border-radius: 8px;
     font-size: 16px;
     font-weight: bold;
-    cursor: pointer; 
+    cursor: pointer;
 }
 
 .upload-btn-wrapper input[type=file] {
@@ -33,17 +33,15 @@
 
 .preview {
     margin-top: 20px;
-    width: 100%; 
+    width: 100%;
 }
 
 #ocr-result {
     margin-top: 20px;
-    white-space: pre-wrap; 
-    font-family: monospace; 
-    background-color: #f4f4f4; 
+    white-space: pre-wrap;
+    font-family: monospace;
+    background-color: #f4f4f4;
     padding: 10px;
     border-radius: 5px;
     overflow-x: auto;
 }
-
-
