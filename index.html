@@ -15,7 +15,7 @@
     <div class="container">
         <div class="upload-btn-wrapper">
             <button class="btn">Cargar un archivo</button>
-            <input type="file" name="file" onchange="showPreview(event)"/>
+            <input type="file" name="file" id="fileInput" onchange="showPreview(event)"/>
         </div>
         <div class="preview" id="preview"></div>
         <canvas id="pdf-canvas" style="display: none;"></canvas>
