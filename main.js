@@ -113,7 +113,7 @@ function savePDFWithNumber(pdfData, number) {
     const blob = new Blob([pdfData], { type: 'application/pdf' });
     const url = URL.createObjectURL(blob);
     
-    const confirmDownload = confirm(`¿Deseas descargar el PDF ${number}?`);
+    // const confirmDownload = confirm(`¿Deseas descargar el PDF ${number}?`);
     
     if (confirmDownload) {
         const a = document.createElement('a');
