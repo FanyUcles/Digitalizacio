@@ -103,14 +103,19 @@ function savePDFWithNumber(pdfData, number) {
     const blob = new Blob([pdfData], { type: 'application/pdf' });
     const url = URL.createObjectURL(blob);
     
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `declaración_No._${number}.pdf`; // Nombre del archivo con el número
-    a.style.display = 'none';
+    const confirmDownload = confirm(`¿Deseas descargar el PDF ${number}?`);
     
-    document.body.appendChild(a);
-    a.click();
-    
-    document.body.removeChild(a);
+    if (confirmDownload) {
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `declaración_No. ${number}.pdf`; // Nombre del archivo con el número
+        a.style.display = 'none';
+        
+        document.body.appendChild(a);
+        a.click();
+        
+        document.body.removeChild(a);
+    }
+
     URL.revokeObjectURL(url);
 }
