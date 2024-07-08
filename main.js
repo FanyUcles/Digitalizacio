@@ -1,4 +1,5 @@
 let globalPdfData;
+let ocrAttempts = 0;
 
 document.addEventListener('DOMContentLoaded', () => {
     const fileInput = document.getElementById('fileInput');
@@ -90,15 +91,24 @@ async function performOCR(canvas) {
 
             // Guardar el PDF con el número obtenido
             savePDFWithNumber(globalPdfData, elevenDigitNumber);
+            ocrAttempts = 0; // Reiniciar el contador de intentos
         } else {
             resultElement.style.display = 'none'; // Ocultar el resultado si no se encuentra el número
             await new Promise(resolve => setTimeout(resolve, 3000)); // Esperar 3 segundos
-            renderPDF(globalPdfData, 1.798); // Reiniciar el OCR
+
+            if (ocrAttempts === 0) {
+                ocrAttempts++;
+                renderPDF(globalPdfData, 1.798); // Primer reinicio del OCR
+            } else if (ocrAttempts === 1) {
+                ocrAttempts++;
+                renderPDF(globalPdfData, 1.77); // Segundo reinicio del OCR
+            }
         }
     } catch (error) {
         console.error('Error en OCR:', error);
     }
 }
+
 function savePDFWithNumber(pdfData, number) {
     const blob = new Blob([pdfData], { type: 'application/pdf' });
     const url = URL.createObjectURL(blob);
